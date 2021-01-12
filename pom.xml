@@ -30,4 +30,12 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jmetro</artifactId>
+            <version>8.6.13</version>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -2,11 +2,21 @@ package be.renaud11232.ghostfinder.ghost;
 
 public enum Evidence {
 
-    EMF_LEVEL_5,
-    FINGERPRINTS,
-    FREEZING_TEMPERATURES,
-    GHOST_ORBS,
-    GHOST_WRITING,
-    SPIRIT_BOX;
+    EMF_LEVEL_5("EMF Level 5"),
+    FINGERPRINTS("Fingerprints"),
+    FREEZING_TEMPERATURES("Freezing Temperatures"),
+    GHOST_ORBS("Ghost Orbs"),
+    GHOST_WRITING("Ghost Writing"),
+    SPIRIT_BOX("Spirit Box");
 
+    private final String name;
+
+    Evidence(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -27,11 +27,13 @@ public enum Ghost {
         this.evidences = Collections.unmodifiableList(Arrays.asList(evidences));
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Collection<Evidence> getEvidences() {
         return evidences;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

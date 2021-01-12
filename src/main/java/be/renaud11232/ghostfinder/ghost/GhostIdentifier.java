@@ -43,9 +43,4 @@ public class GhostIdentifier {
         return possibleGhosts;
     }
 
-    public void reset() {
-        foundEvidences.clear();
-        rejectedEvidences.clear();
-    }
-
 }

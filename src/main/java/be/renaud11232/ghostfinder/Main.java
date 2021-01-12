@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 public class Main extends Application {
 
@@ -16,6 +18,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Main.class.getResource("/fxml/MainWindow.fxml"));
         Scene scene = new Scene(root);
+        JMetro jMetro = new JMetro(Style.DARK);
+        jMetro.setScene(scene);
+        jMetro.setParent(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("GhostFinder");
         primaryStage.setResizable(false);
