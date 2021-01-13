@@ -1,0 +1,7 @@
+.toggle-button.found:selected {
+    -fx-background-color: darkgreen;
+}
+
+.toggle-button.rejected:selected {
+    -fx-background-color: darkred;
+}

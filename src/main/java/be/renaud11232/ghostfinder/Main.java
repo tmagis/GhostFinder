@@ -17,6 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Main.class.getResource("/fxml/MainWindow.fxml"));
+        root.getStylesheets().add("/css/app.css");
         Scene scene = new Scene(root);
         JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);

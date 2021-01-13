@@ -33,6 +33,8 @@ public class GhostIdentifier {
     public Collection<Evidence> getPossibleEvidences() {
         Set<Evidence> possibleEvidences = new HashSet<>();
         getPossibleGhosts().forEach(ghost -> possibleEvidences.addAll(ghost.getEvidences()));
+        possibleEvidences.addAll(rejectedEvidences);
+        possibleEvidences.addAll(foundEvidences);
         return possibleEvidences;
     }
 

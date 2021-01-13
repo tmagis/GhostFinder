@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import jfxtras.styles.jmetro.*?>
 
-<AnchorPane fx:id="container" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.renaud11232.ghostfinder.controller.MainWindowController">
+<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.renaud11232.ghostfinder.controller.MainWindowController">
     <styleClass>
         <JMetroStyleClass fx:constant="BACKGROUND" />
     </styleClass>
