@@ -30,9 +30,11 @@ public class GhostIdentifier {
         rejectedEvidences.remove(evidence);
     }
 
-    public Collection<Evidence> getPossibleEvidences() {
+    public Collection<Evidence> getNeededEvidence() {
         Set<Evidence> possibleEvidences = new HashSet<>();
-        getPossibleGhosts().forEach(ghost -> possibleEvidences.addAll(ghost.getEvidences()));
+        Collection<Ghost> possibleGhosts = getPossibleGhosts();
+        possibleGhosts.forEach(ghost -> possibleEvidences.addAll(ghost.getEvidences()));
+        possibleEvidences.removeIf(evidence -> possibleGhosts.stream().allMatch(ghost -> ghost.getEvidences().contains(evidence)));
         possibleEvidences.addAll(rejectedEvidences);
         possibleEvidences.addAll(foundEvidences);
         return possibleEvidences;

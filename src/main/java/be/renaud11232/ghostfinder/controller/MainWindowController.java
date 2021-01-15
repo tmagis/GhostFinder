@@ -6,6 +6,7 @@ import be.renaud11232.ghostfinder.ghost.GhostIdentifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -27,6 +28,9 @@ public class MainWindowController implements Initializable {
     private double LABELS_Y_OFFSET;
 
     @FXML
+    public Button resetButton;
+
+    @FXML
     private AnchorPane container;
 
     private static final double BLOCK_SIZE = 50;
@@ -43,6 +47,9 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Node resetGraphic = new MDL2IconFont("\uE72C");
+        resetGraphic.setStyle("-fx-font-size: " + BLOCK_SIZE / 2);
+        resetButton.setGraphic(resetGraphic);
         double layoutY = OFFSET;
         for(Evidence evidence : Evidence.values()) {
             ToggleGroup toggleGroup = new ToggleGroup();
@@ -73,7 +80,7 @@ public class MainWindowController implements Initializable {
                 labels.values().forEach(l -> l.setTextFill(Color.GREY));
                 foundButtons.values().forEach(b -> b.setDisable(true));
                 rejectedButtons.values().forEach(b -> b.setDisable(true));
-                ghostIdentifier.getPossibleEvidences().forEach(e -> {
+                ghostIdentifier.getNeededEvidence().forEach(e -> {
                     labels.get(e).setTextFill(Color.WHITE);
                     rejectedButtons.get(e).setDisable(false);
                     foundButtons.get(e).setDisable(false);
@@ -138,4 +145,8 @@ public class MainWindowController implements Initializable {
         ghostLabels.add(ghostLabel);
     }
 
+    public void reset() {
+        foundButtons.values().forEach(toggleButton -> toggleButton.setSelected(false));
+        rejectedButtons.values().forEach(toggleButton -> toggleButton.setSelected(false));
+    }
 }

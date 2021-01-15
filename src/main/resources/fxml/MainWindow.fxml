@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import jfxtras.styles.jmetro.*?>
 
@@ -7,4 +8,8 @@
     <styleClass>
         <JMetroStyleClass fx:constant="BACKGROUND" />
     </styleClass>
+   <children>
+      <Button fx:id="resetButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#reset" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      </Button>
+   </children>
 </AnchorPane>
