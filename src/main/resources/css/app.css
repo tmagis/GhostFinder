@@ -1,7 +1,7 @@
-.toggle-button.found:selected {
+.toggle-button.common, .toggle-button.found:selected {
     -fx-background-color: darkgreen;
 }
 
-.toggle-button.rejected:selected {
+.toggle-button.impossible, .toggle-button.rejected:selected {
     -fx-background-color: darkred;
 }

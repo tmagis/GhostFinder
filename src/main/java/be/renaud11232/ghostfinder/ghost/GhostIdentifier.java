@@ -1,6 +1,7 @@
 package be.renaud11232.ghostfinder.ghost;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GhostIdentifier {
 
@@ -30,21 +31,30 @@ public class GhostIdentifier {
         rejectedEvidences.remove(evidence);
     }
 
-    public Collection<Evidence> getNeededEvidence() {
-        Set<Evidence> possibleEvidences = new HashSet<>();
+    public Collection<Evidence> getCommonEvidence() {
         Collection<Ghost> possibleGhosts = getPossibleGhosts();
-        possibleGhosts.forEach(ghost -> possibleEvidences.addAll(ghost.getEvidences()));
-        possibleEvidences.removeIf(evidence -> possibleGhosts.stream().allMatch(ghost -> ghost.getEvidences().contains(evidence)));
-        possibleEvidences.addAll(rejectedEvidences);
-        possibleEvidences.addAll(foundEvidences);
-        return possibleEvidences;
+        return possibleGhosts.stream().flatMap(
+                ghost -> ghost.getEvidences().stream()
+        ).distinct().filter(
+                evidence -> !foundEvidences.contains(evidence) && possibleGhosts.stream().allMatch(
+                        ghost -> ghost.getEvidences().contains(evidence)
+                )
+        ).collect(Collectors.toSet());
+    }
+
+    public Collection<Evidence> getImpossibleEvidence() {
+        return Arrays.stream(Evidence.values()).filter(
+                evidence -> !rejectedEvidences.contains(evidence) && getPossibleGhosts().stream().noneMatch(
+                        ghost -> ghost.getEvidences().contains(evidence)
+                )
+        ).collect(Collectors.toSet());
     }
 
     public Collection<Ghost> getPossibleGhosts() {
-        Set<Ghost> possibleGhosts = new HashSet<>(Arrays.asList(Ghost.values()));
-        foundEvidences.forEach(foundEvidence -> possibleGhosts.removeIf(ghost -> !ghost.getEvidences().contains(foundEvidence)));
-        rejectedEvidences.forEach(rejectedEvidence -> possibleGhosts.removeIf(ghost -> ghost.getEvidences().contains(rejectedEvidence)));
-        return possibleGhosts;
+        return Arrays.stream(Ghost.values()).filter(
+                ghost -> ghost.getEvidences().containsAll(foundEvidences) && rejectedEvidences.stream().noneMatch(
+                        evidence -> ghost.getEvidences().contains(evidence)
+                )
+        ).collect(Collectors.toSet());
     }
-
 }

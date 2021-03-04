@@ -51,11 +51,11 @@ public class MainWindowController implements Initializable {
         resetGraphic.setStyle("-fx-font-size: " + BLOCK_SIZE / 2);
         resetButton.setGraphic(resetGraphic);
         double layoutY = OFFSET;
-        for(Evidence evidence : Evidence.values()) {
+        for (Evidence evidence : Evidence.values()) {
             ToggleGroup toggleGroup = new ToggleGroup();
-            ToggleButton found = createButton(layoutY, toggleGroup, new MDL2IconFont("\uE73E"),"found");
+            ToggleButton found = createButton(layoutY, toggleGroup, new MDL2IconFont("\uE73E"), "found");
             found.setLayoutX(OFFSET);
-            ToggleButton rejected = createButton(layoutY, toggleGroup, new MDL2IconFont("\uE711"),"rejected");
+            ToggleButton rejected = createButton(layoutY, toggleGroup, new MDL2IconFont("\uE711"), "rejected");
             rejected.setLayoutX(BLOCK_SIZE + OFFSET * 2);
             Label label = new Label(evidence.toString());
             label.setLayoutX(3 * OFFSET + 2 * BLOCK_SIZE);
@@ -66,30 +66,49 @@ public class MainWindowController implements Initializable {
             rejectedButtons.put(evidence, rejected);
             container.getChildren().addAll(found, rejected, label);
             layoutY += BLOCK_SIZE + OFFSET;
-            toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-                if(oldValue == found) {
-                    ghostIdentifier.removeFoundEvidence(evidence);
-                } else if(oldValue == rejected) {
-                    ghostIdentifier.removeRejectedEvidence(evidence);
-                }
-                if(newValue == found) {
-                    ghostIdentifier.addFoundEvidence(evidence);
-                } else if (newValue == rejected) {
-                    ghostIdentifier.addRejectedEvidence(evidence);
-                }
-                labels.values().forEach(l -> l.setTextFill(Color.GREY));
-                foundButtons.values().forEach(b -> b.setDisable(true));
-                rejectedButtons.values().forEach(b -> b.setDisable(true));
-                ghostIdentifier.getNeededEvidence().forEach(e -> {
-                    labels.get(e).setTextFill(Color.WHITE);
-                    rejectedButtons.get(e).setDisable(false);
-                    foundButtons.get(e).setDisable(false);
-                });
-                displayGhosts();
-            });
+            registerListener(toggleGroup, evidence, found, rejected);
         }
         LABELS_Y_OFFSET = layoutY + 20;
         displayGhosts();
+    }
+
+    private void registerListener(ToggleGroup toggleGroup, Evidence evidence, ToggleButton found, ToggleButton rejected) {
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue == found) {
+                ghostIdentifier.removeFoundEvidence(evidence);
+            } else if (oldValue == rejected) {
+                ghostIdentifier.removeRejectedEvidence(evidence);
+            }
+            if (newValue == found) {
+                ghostIdentifier.addFoundEvidence(evidence);
+            } else if (newValue == rejected) {
+                ghostIdentifier.addRejectedEvidence(evidence);
+            }
+
+            Arrays.stream(Evidence.values()).forEach(e -> {
+                labels.get(e).setTextFill(Color.WHITE);
+                foundButtons.get(e).setDisable(false);
+                foundButtons.get(e).getStyleClass().remove("common");
+                rejectedButtons.get(e).setDisable(false);
+                rejectedButtons.get(e).getStyleClass().remove("impossible");
+            });
+
+            ghostIdentifier.getCommonEvidence().forEach(e -> {
+                labels.get(e).setTextFill(Color.GREY);
+                foundButtons.get(e).getStyleClass().add("common");
+                foundButtons.get(e).setDisable(true);
+                rejectedButtons.get(e).setDisable(true);
+            });
+
+            ghostIdentifier.getImpossibleEvidence().forEach(e -> {
+                labels.get(e).setTextFill(Color.GREY);
+                rejectedButtons.get(e).getStyleClass().add("impossible");
+                foundButtons.get(e).setDisable(true);
+                rejectedButtons.get(e).setDisable(true);
+            });
+
+            displayGhosts();
+        });
     }
 
     private ToggleButton createButton(double layoutY, ToggleGroup toggleGroup, Node graphic, String cssClass) {
@@ -112,15 +131,15 @@ public class MainWindowController implements Initializable {
         container.getChildren().removeAll(ghostLabels);
         ghostLabels.clear();
         Collection<Ghost> possibleGhosts = ghostIdentifier.getPossibleGhosts();
-        if(possibleGhosts.size() == 0) {
-            createGhostLabel("No existing ghost found", OFFSET,  LABELS_Y_OFFSET);
-        } else if(possibleGhosts.size() == 1) {
+        if (possibleGhosts.size() == 0) {
+            createGhostLabel("No existing ghost found", OFFSET, LABELS_Y_OFFSET);
+        } else if (possibleGhosts.size() == 1) {
             Ghost ghost = possibleGhosts.stream().findFirst().get();
-            createGhostLabel("The ghost is " + ghostAsString(ghost), OFFSET,  LABELS_Y_OFFSET);
+            createGhostLabel("The ghost is " + ghostAsString(ghost), OFFSET, LABELS_Y_OFFSET);
         } else {
             double layoutY = LABELS_Y_OFFSET;
             createGhostLabel("The ghost can be :", OFFSET, LABELS_Y_OFFSET);
-            for(Ghost ghost : possibleGhosts) {
+            for (Ghost ghost : possibleGhosts) {
                 layoutY += OFFSET + BLOCK_SIZE / 4;
                 createGhostLabel("\u2022 " + ghostAsString(ghost), OFFSET + BLOCK_SIZE / 4, layoutY);
             }
@@ -129,7 +148,7 @@ public class MainWindowController implements Initializable {
 
     private String ghostAsString(Ghost ghost) {
         String det = "a";
-        if(Arrays.asList(new String[]{"A", "E", "I", "O", "U"}).contains(ghost.toString().substring(0, 1))) {
+        if (Arrays.asList(new String[]{"A", "E", "I", "O", "U"}).contains(ghost.toString().substring(0, 1))) {
             det = "an";
         }
         return det + " " + ghost;
