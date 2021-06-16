@@ -17,7 +17,9 @@ public enum Ghost {
     SHADE("Shade", Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING),
     SPIRIT("Spirit", Evidence.FINGERPRINTS, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX),
     WRAITH("Wraith", Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPERATURES, Evidence.SPIRIT_BOX),
-    YUREI("Yurei", Evidence.FREEZING_TEMPERATURES, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING);
+    YUREI("Yurei", Evidence.FREEZING_TEMPERATURES, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING),
+    HANTU("Hantu", Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FINGERPRINTS),
+    YOKAI("Yokai", Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.GHOST_WRITING);
 
     private final String name;
     private final Collection<Evidence> evidences;
