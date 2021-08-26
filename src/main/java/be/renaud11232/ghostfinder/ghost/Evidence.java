@@ -7,7 +7,8 @@ public enum Evidence {
     FREEZING_TEMPERATURES("Freezing Temperatures"),
     GHOST_ORBS("Ghost Orbs"),
     GHOST_WRITING("Ghost Writing"),
-    SPIRIT_BOX("Spirit Box");
+    SPIRIT_BOX("Spirit Box"),
+    DOTS_PROJECTOR("D.O.T.S Projector");
 
     private final String name;
 
