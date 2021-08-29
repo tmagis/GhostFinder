@@ -19,7 +19,7 @@ public enum Ghost {
     WRAITH("Wraith", Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR),
     YUREI("Yurei", Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPERATURES, Evidence.DOTS_PROJECTOR),
     HANTU("Hantu", Evidence.FINGERPRINTS, Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPERATURES),
-    YOKAI("Yokai", Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR),
+    YOKAI("Yokai", Evidence.SPIRIT_BOX, Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR),
     GORYO("Goryo", Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR),
     MYLING("Myling", Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.GHOST_WRITING);
 
